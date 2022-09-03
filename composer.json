@@ -1,0 +1,24 @@
+{
+    "name": "utxo-one/twitter-ultimate-php",
+    "description": "The Ultimate PHP Wrapper for the Twitter v2 API",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "UtxoOne\\TwitterUltimatePhp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "utxo.one",
+            "email": "dev@utxo.one"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.5",
+        "vlucas/phpdotenv": "^5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
