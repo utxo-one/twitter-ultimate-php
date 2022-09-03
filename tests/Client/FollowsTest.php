@@ -3,7 +3,7 @@
 use UtxoOne\TwitterUltimatePhp\Client\Follows;
 use UtxoOne\TwitterUltimatePhp\Models\Users;
 
-final class FollowsTest extends ClientTest
+class FollowsTest extends ClientTest
 {
     public function testGetFollowers(): void
     {

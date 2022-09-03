@@ -4,7 +4,7 @@ use UtxoOne\TwitterUltimatePhp\Client\TweetLookup;
 use UtxoOne\TwitterUltimatePhp\Models\Tweet;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 
-final class TweetLookupTest extends ClientTest
+class TweetLookupTest extends ClientTest
 {
     public function testGetTweet(): void
     {
@@ -14,6 +14,11 @@ final class TweetLookupTest extends ClientTest
 
         $this->assertInstanceOf(Tweet::class, $response);
         $this->assertSame('1565628118001455105', $response->getId());
+        $this->assertNotNull($response->getCreatedAt());
+        $this->assertNotNull($response->getText());
+        $this->assertNotNull($response->getAuthorId());
+        $this->assertNotNull($response->getConversationId());
+        $this->assertNotNull($response->getPublicMetrics());
 
     }
 

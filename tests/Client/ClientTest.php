@@ -11,11 +11,4 @@ class ClientTest extends TestCase
         $dotenv = \Dotenv\Dotenv::createImmutable('./');
         $dotenv->load();
     }
-
-    public function testClientInit()
-    {
-        $client = new Client();
-
-        $this->assertInstanceOf(Client::class, $client);
-    }
 }

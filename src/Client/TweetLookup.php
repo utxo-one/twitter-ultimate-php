@@ -10,7 +10,7 @@ class TweetLookup extends Client
     public function getTweet(string $id): Tweet
     {
         $response = $this->get('tweets/' . $id, [
-            'user.fields' => 'created_at',
+            'tweet.fields' => $this->tweetFields,
         ]);
 
         return new Tweet($response->getData());
@@ -19,7 +19,7 @@ class TweetLookup extends Client
     public function getTweets(array $tweetIds): Tweets
     {
         $response = $this->get('tweets', [
-            'user.fields' => 'created_at',
+            'tweet.fields' => $this->tweetFields,
             'ids' => implode(',', $tweetIds),
         ]);
 

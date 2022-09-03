@@ -13,7 +13,14 @@ class Client
     private $baseUrl;
     private $bearerToken;
     private \GuzzleHttp\Client $client;
-
+    public $userFields;
+    public $tweetFields;
+    public $mediaFields;
+    public $placeFields;
+    public $pollFields;
+    public $listFields;
+    public $expansions;
+     
     public function __construct(
         ?string $apiKey = null,
         ?string $apiSecret = null,
@@ -28,6 +35,9 @@ class Client
         $this->baseUrl = 'https://api.twitter.com/2/';
         $this->bearerToken = $bearerToken;
         $this->client = $client = new \GuzzleHttp\Client();
+        $this->listFields = 'created_at,follower_count,member_count,private,description,owner_id';
+        $this->userFields = 'created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld';
+        $this->tweetFields = 'attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,reply_settings,source,text,withheld';
     }
 
     public function get(string $endpoint, ?array $params = null): TwitterResponse 

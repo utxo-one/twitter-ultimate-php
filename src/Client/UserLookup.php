@@ -9,7 +9,7 @@ class UserLookup extends Client
     public function getUserByUsername(string $username): User
     {
         $response = $this->get('users/by/username/' . $username, [
-            'user.fields' => 'created_at',
+            'user.fields' => $this->userFields,
         ]);
 
         return new User($response->getData());
@@ -18,7 +18,7 @@ class UserLookup extends Client
     public function getUserById(string $id): User
     {
         $response = $this->get('users/' . $id, [
-            'user.fields' => 'created_at',
+            'user.fields' => $this->userFields,
         ]);
 
         return new User($response->getData());
