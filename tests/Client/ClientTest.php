@@ -1,6 +1,7 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
+use UtxoOne\TwitterUltimatePhp\Client\Client;
 
 class ClientTest extends TestCase
 {
@@ -9,5 +10,12 @@ class ClientTest extends TestCase
         parent::setUp();
         $dotenv = \Dotenv\Dotenv::createImmutable('./');
         $dotenv->load();
+    }
+
+    public function testClientInit()
+    {
+        $client = new Client();
+
+        $this->assertInstanceOf(Client::class, $client);
     }
 }

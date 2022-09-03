@@ -32,13 +32,21 @@ class Client
 
     public function get(string $endpoint, ?array $params = null): TwitterResponse 
     {
-       $response = $this->client->request('GET', $this->baseUrl . $endpoint, [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->bearerToken,
-                'Accept' => 'application/json',
-            ],
-            'query' => $params,
-        ]);
+        try {
+            $response = $this->client->request('GET', $this->baseUrl . $endpoint, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->bearerToken,
+                    'Accept' => 'application/json',
+                ],
+                'query' => $params,
+            ]);
+        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+            throw new \Exception($e->getMessage());
+        }
+
+        if ($response->getStatusCode() !== 200) {
+            throw new \Exception('Twitter API returned status code ' . $response->getStatusCode());
+        }
 
         $body = json_decode($response->getBody(), true);
 
