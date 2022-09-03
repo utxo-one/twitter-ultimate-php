@@ -4,7 +4,6 @@ namespace UtxoOne\TwitterUltimatePhp\Client;
 
 use UtxoOne\TwitterUltimatePhp\Models\Tweet;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
-use UtxoOne\TwitterUltimatePhp\Models\User;
 
 class TweetLookup extends Client
 {
