@@ -1,12 +1,11 @@
 ## Twitter Ultimate PHP
 
-An opinionated API Wrapper implementation for the Twitter v2 API.
+An opinionated API Wrapper implementation for the Twitter v2 API. Closely follows the Twitter Postman Library naming conventions.
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+You will need a Twitter Developer account, a Project and all your API keys.
 
 ### Prerequisites
 
@@ -18,18 +17,12 @@ Install in your local composer app:
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+Set your .env file with the following variables:
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
+  ```sh
+    TWITTER_BEARER_TOKEN=jlkajsdlfkajslkdf
+    TWITTER_ADMIN_USER_ID=3456345634563456
+  ```
    
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -39,12 +32,18 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Getting a Tweet
 
 ```php
    $client = new TweetLookup($bearerToken);
-   $client->getTweet($tweetId)->getText(); // "The text from the tweet"
-   ```
+   $tweet = $client->getTweet($tweetId); 
+```
+Getting a User's Followers
+
+```php
+   $client = new Follows($bearerToken);
+   $tweet = $client->getFollowers($userId); 
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
