@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use UtxoOne\TwitterUltimatePhp\Client\Client;
 use UtxoOne\TwitterUltimatePhp\Models\TwitterResponse;
 
-final class ClientTest extends TestCase
+class ClientTest extends TestCase
 {
     public function setUp(): void
     {

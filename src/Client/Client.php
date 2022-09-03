@@ -39,6 +39,12 @@ class Client
             ],
             'query' => $params,
         ]);
+
+        $body = json_decode($response->getBody(), true);
+
+        if (isset($body['errors'])) {
+            throw new \Exception($body['errors'][0]['detail']);
+        }
     
         return new TwitterResponse($response);
     }
