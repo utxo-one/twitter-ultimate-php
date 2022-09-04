@@ -1,13 +1,13 @@
-<?php 
+<?php
 
-use UtxoOne\TwitterUltimatePhp\Clients\UserLookupClient;
+use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
 use UtxoOne\TwitterUltimatePhp\Models\User;
 
-class UserLookupTest extends BaseClientTest
+class UserClientest extends BaseClientTest
 {
     public function testGetUserByUsername(): void
     {
-        $client = new UserLookupClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+        $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
         $response = $client->getUserByUsername('utxoone');
 
@@ -17,7 +17,7 @@ class UserLookupTest extends BaseClientTest
 
     public function testGetUserById(): void
     {
-        $client = new UserLookupClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+        $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
         $response = $client->getUserById($client->getUserByUsername('utxoone')->getId());
 

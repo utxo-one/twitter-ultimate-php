@@ -4,7 +4,7 @@ namespace UtxoOne\TwitterUltimatePhp\Clients;
 
 use UtxoOne\TwitterUltimatePhp\Models\User;
 
-class UserLookupClient extends BaseClient
+class UserClient extends BaseClient
 {
     public function getUserByUsername(string $username): User
     {

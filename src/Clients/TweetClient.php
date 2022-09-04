@@ -5,7 +5,7 @@ namespace UtxoOne\TwitterUltimatePhp\Clients;
 use UtxoOne\TwitterUltimatePhp\Models\Tweet;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 
-class TweetLookupClient extends BaseClient
+class TweetClient extends BaseClient
 {
     public function getTweet(string $id): Tweet
     {
@@ -21,6 +21,15 @@ class TweetLookupClient extends BaseClient
         $response = $this->get('tweets', [
             'tweet.fields' => $this->tweetFields,
             'ids' => implode(',', $tweetIds),
+        ]);
+
+        return new Tweets($response->getData());
+    }
+
+    public function getQuoteTweets(string $id): Tweets
+    {
+        $response = $this->get('tweets/' . $id . '/quote_tweets', [
+            'tweet.fields' => $this->tweetFields,
         ]);
 
         return new Tweets($response->getData());
