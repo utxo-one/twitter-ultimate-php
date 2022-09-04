@@ -1,10 +1,10 @@
 <?php
 
-namespace UtxoOne\TwitterUltimatePhp\Client;
+namespace UtxoOne\TwitterUltimatePhp\Clients;
 
 use UtxoOne\TwitterUltimatePhp\Models\Users;
 
-class Follows extends Client
+class FollowsClient extends BaseClient
 {
     public function getFollowers(string $id): Users
     {

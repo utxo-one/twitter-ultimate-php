@@ -1,13 +1,13 @@
 <?php
 
-use UtxoOne\TwitterUltimatePhp\Client\Follows;
+use UtxoOne\TwitterUltimatePhp\Clients\FollowsClient;
 use UtxoOne\TwitterUltimatePhp\Models\Users;
 
-class FollowsTest extends ClientTest
+class FollowsClientTest extends BaseClientTest
 {
     public function testGetFollowers(): void
     {
-        $client = new Follows(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+        $client = new FollowsClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
         $response = $client->getFollowers($_ENV['TWITTER_ADMIN_USER_ID']);
 
@@ -16,7 +16,7 @@ class FollowsTest extends ClientTest
 
     public function testGetFollowing(): void
     {
-        $client = new Follows(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+        $client = new FollowsClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
         $response = $client->getFollowing($_ENV['TWITTER_ADMIN_USER_ID']);
 

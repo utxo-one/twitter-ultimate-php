@@ -1,11 +1,11 @@
 <?php
 
-namespace UtxoOne\TwitterUltimatePhp\Client;
+namespace UtxoOne\TwitterUltimatePhp\Clients;
 
 use UtxoOne\TwitterUltimatePhp\Models\Tweet;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 
-class TweetLookup extends Client
+class TweetLookupClient extends BaseClient
 {
     public function getTweet(string $id): Tweet
     {

@@ -1,12 +1,9 @@
 <?php
 
-use UtxoOne\TwitterUltimatePhp\Client\ListClient;
-use UtxoOne\TwitterUltimatePhp\Client\TweetLookup;
-use UtxoOne\TwitterUltimatePhp\Models\Tweet;
-use UtxoOne\TwitterUltimatePhp\Models\Tweets;
+use UtxoOne\TwitterUltimatePhp\Clients\ListClient;
 use UtxoOne\TwitterUltimatePhp\Models\TwitterList;
 
-class ListClientTest extends ClientTest
+class ListClientTest extends BaseClientTest
 {
     public function testGetList(): void
     {

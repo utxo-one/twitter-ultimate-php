@@ -1,14 +1,14 @@
 <?php
 
-use UtxoOne\TwitterUltimatePhp\Client\TweetLookup;
+use UtxoOne\TwitterUltimatePhp\Clients\TweetLookupClient;
 use UtxoOne\TwitterUltimatePhp\Models\Tweet;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 
-class TweetLookupTest extends ClientTest
+class TweetLookupClientTest extends BaseClientTest
 {
     public function testGetTweet(): void
     {
-        $client = new TweetLookup(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+        $client = new TweetLookupClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
         $response = $client->getTweet('1565628118001455105');
 
@@ -24,7 +24,7 @@ class TweetLookupTest extends ClientTest
 
     public function testGetTweets(): void
     {
-        $client = new TweetLookup(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+        $client = new TweetLookupClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
         $response = $client->getTweets(['1565628118001455105', '1565999511536914433']);
 

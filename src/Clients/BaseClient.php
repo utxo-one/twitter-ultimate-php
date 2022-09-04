@@ -1,10 +1,11 @@
 <?php
 
-namespace UtxoOne\TwitterUltimatePhp\Client;
+namespace UtxoOne\TwitterUltimatePhp\Clients;
 
 use UtxoOne\TwitterUltimatePhp\Models\TwitterResponse;
+use \Abraham\TwitterOAuth\TwitterOAuth;
 
-class Client
+class BaseClient
 {
     /**
      * Twitter Developer API Key
@@ -143,7 +144,7 @@ class Client
         $this->userFields = 'created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld';
         $this->tweetFields = 'attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,reply_settings,source,text,withheld';
     }
-    
+
     /**
      * Make a GET request to the Twitter API.
      *
@@ -176,5 +177,37 @@ class Client
         }
     
         return new TwitterResponse($response);
+    }
+
+    public function getRequestToken(string $oauthCallback): array
+    {
+        $connection = new TwitterOAuth($this->apiKey, $this->apiSecret);
+        $requestToken = $connection->oauth('oauth/request_token', ['oauth_callback' => $oauthCallback]);
+
+        return $requestToken;
+    }
+
+    public function getAuthorizeUrl(array $requestToken): string
+    {
+        $connection = new TwitterOAuth($this->apiKey, $this->apiSecret, $requestToken['oauth_token'], $requestToken['oauth_token_secret']);
+        $url = $connection->url('oauth/authorize', ['oauth_token' => $requestToken['oauth_token']]);
+
+        return $url;
+    }
+
+    public function getAccessToken(string $oauthToken, string $oauthSecret, string $oauthVerifier): array
+    {
+        $connection = new TwitterOAuth(
+            $this->apiKey,
+            $this->apiSecret,
+            $oauthToken,
+            $oauthSecret,
+        );
+
+        $accessToken = $connection->oauth('oauth/access_token', [
+            'oauth_verifier' => $oauthVerifier,
+        ]);
+
+        return $accessToken;
     }
 }

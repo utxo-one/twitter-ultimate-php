@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use UtxoOne\TwitterUltimatePhp\Client\Client;
 
-class ClientTest extends TestCase
+class BaseClientTest extends TestCase
 {
     public function setUp(): void
     {

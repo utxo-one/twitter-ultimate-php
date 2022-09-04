@@ -1,12 +1,12 @@
 <?php
 
-namespace UtxoOne\TwitterUltimatePhp\Client;
+namespace UtxoOne\TwitterUltimatePhp\Clients;
 
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 use UtxoOne\TwitterUltimatePhp\Models\TwitterList;
 use UtxoOne\TwitterUltimatePhp\Models\User;
 
-class ListClient extends Client
+class ListClient extends BaseClient
 {
     public function getList(string $id): TwitterList
     {
