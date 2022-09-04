@@ -44,4 +44,13 @@ class TweetClient extends BaseClient
 
         return new Users($response->getData());
     }
+
+    public function getRetweetedByUsers(string $id): Users
+    {
+        $response = $this->get('tweets/' . $id . '/retweeted_by', [
+            'user.fields' => $this->userFields,
+        ]);
+
+        return new Users($response->getData());
+    }
 }

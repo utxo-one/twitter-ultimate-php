@@ -113,6 +113,13 @@ class BaseClient
     public $listFields;
 
     /**
+     * Twitter Space Fields (comma delimited)
+     *
+     * @var string
+     */
+    public $spaceFields;
+
+    /**
      * Twitter Expansions (comma delimited)
      *
      * @var string
@@ -139,7 +146,8 @@ class BaseClient
         $this->accessSecret = $accessSecret;
         $this->baseUrl = 'https://api.twitter.com/2/';
         $this->bearerToken = $bearerToken;
-        $this->client = $client = new \GuzzleHttp\Client();
+        $this->client = new \GuzzleHttp\Client();
+        $this->spaceFields = 'host_ids,created_at,creator_id,id,lang,invited_user_ids,speaker_ids,started_at,state,title,updated_at,is_ticketed,ended_at,topic_ids';
         $this->listFields = 'created_at,follower_count,member_count,private,description,owner_id';
         $this->userFields = 'created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld';
         $this->tweetFields = 'attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,reply_settings,source,text,withheld';

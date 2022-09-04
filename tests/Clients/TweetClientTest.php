@@ -56,4 +56,14 @@ class TweetClientTest extends BaseClientTest
 
         $this->assertInstanceOf(Users::class, $response);
     }
+
+    /** @group getRetweetedByUsers */
+    public function testGetRetweetedByUsers(): void
+    {
+        $client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+        $response = $client->getRetweetedByUsers('1565628118001455105');
+
+        $this->assertInstanceOf(Users::class, $response);
+    }
 }
