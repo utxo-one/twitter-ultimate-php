@@ -30,7 +30,7 @@ class ListClient extends BaseClient
     public function getListTweets(string $id): Tweets
     {
         $response = $this->get('lists/' . $id . '/tweets', [
-            'list.fields' => $this->listFields,
+            'tweet.fields' => $this->tweetFields,
         ]);
 
         return new Tweets($response->getData());
@@ -47,7 +47,7 @@ class ListClient extends BaseClient
 
     public function getUserMemberships(string $id): TwitterLists
     {
-        $response = $this->get('users/' . $id . '/lists_memberships', [
+        $response = $this->get('users/' . $id . '/list_memberships', [
             'list.fields' => $this->listFields,
         ]);
 

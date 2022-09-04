@@ -175,7 +175,7 @@ class BaseClient
         if (isset($body['errors'])) {
             throw new \Exception($body['errors'][0]['detail']);
         }
-    
+
         return new TwitterResponse($response);
     }
 
