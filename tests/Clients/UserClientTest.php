@@ -30,7 +30,6 @@ class UserClienTest extends BaseClientTest
         $this->assertFalse($response->isProtected());
         $this->assertFalse($response->isVerified());
         $this->assertSame('2022-08-14T21:32:08.000Z', $response->getCreatedAt());
-
     }
 
     /** @group getLikedTweets */

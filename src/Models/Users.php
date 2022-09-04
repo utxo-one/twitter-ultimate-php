@@ -17,5 +17,5 @@ class Users
         }
 
         return $users;
-    }  
+    }
 }

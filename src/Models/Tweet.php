@@ -16,7 +16,7 @@ class Tweet
     public function getText(): string
     {
         return $this->data['text'];
-    }   
+    }
 
     public function getCreatedAt(): string
     {
@@ -35,7 +35,7 @@ class Tweet
 
     public function getInReplyToUserId(): ?string
     {
-       return (isset($this->data['in_reply_to_user_id']) ? $this->data['in_reply_to_user_id'] : null);
+        return (isset($this->data['in_reply_to_user_id']) ? $this->data['in_reply_to_user_id'] : null);
     }
 
     public function getLang(): ?string

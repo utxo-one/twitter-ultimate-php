@@ -17,5 +17,5 @@ class Tweets
         }
 
         return $tweets;
-    }  
+    }
 }

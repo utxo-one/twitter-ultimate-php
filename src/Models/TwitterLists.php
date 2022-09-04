@@ -17,5 +17,5 @@ class TwitterLists
         }
 
         return $twitterLists;
-    }  
+    }
 }

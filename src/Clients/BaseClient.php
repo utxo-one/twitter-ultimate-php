@@ -3,125 +3,125 @@
 namespace UtxoOne\TwitterUltimatePhp\Clients;
 
 use UtxoOne\TwitterUltimatePhp\Models\TwitterResponse;
-use \Abraham\TwitterOAuth\TwitterOAuth;
+use Abraham\TwitterOAuth\TwitterOAuth;
 
 class BaseClient
 {
     /**
      * Twitter Developer API Key
-     * 
+     *
      * @var string
      */
     private $apiKey;
 
     /**
      * Twitter Developer API Secret
-     * 
+     *
      * @var string
      */
     private $apiSecret;
 
     /**
      * Twitter User OAuth Access Key
-     * 
+     *
      * @var string
      */
     private $accessKey;
 
     /**
      * Twitter User OAuth Access Secret
-     * 
+     *
      * @var string
      */
     private $accessSecret;
 
     /**
      * Twitter Project Client ID
-     * 
+     *
      * @var string
      */
     private $clientId;
 
     /**
      * Twitter Project Client Secret
-     * 
+     *
      * @var string
      */
     private $clientSecret;
 
     /**
      * Twitter API Base URL
-     * 
+     *
      * @var string
      */
     private $baseUrl;
 
     /**
      * Twitter Developer Bearer Token
-     * 
+     *
      * @var string
      */
     private $bearerToken;
 
     /**
      * Guzzle Client
-     * 
+     *
      * @var \GuzzleHttp\Client
      */
     private \GuzzleHttp\Client $client;
 
     /**
      * Twitter User Fields (comma delimited)
-     * 
+     *
      * @var string
      */
     public $userFields;
 
     /**
      * Twitter Tweet Fields (comma delimited)
-     * 
+     *
      * @var string
      */
     public $tweetFields;
 
     /**
      * Twitter Media Fields (comma delimited)
-     * 
+     *
      * @var string
      */
     public $mediaFields;
 
     /**
      * Twitter Place Fields (comma delimited)
-     * 
+     *
      * @var string
      */
     public $placeFields;
 
     /**
      * Twitter Poll Fields (comma delimited)
-     * 
+     *
      * @var string
      */
     public $pollFields;
 
     /**
      * Twitter List Fields (comma delimited)
-     * 
+     *
      * @var string
      */
     public $listFields;
 
     /**
      * Twitter Expansions (comma delimited)
-     * 
+     *
      * @var string
      */
     public $expansions;
-     
+
     /**
      * The Client Class Constructor
-     * 
+     *
      * The client can be initialized with a combination of API keys, depending on the endpoint.
      * Most get requests only require a bearer token, but some require a user access token.
      * Should only be called privately from scoped clients.
@@ -152,7 +152,7 @@ class BaseClient
      * @param array|null $params
      * @return TwitterResponse
      */
-    public function get(string $endpoint, ?array $params = null): TwitterResponse 
+    public function get(string $endpoint, ?array $params = null): TwitterResponse
     {
         try {
             $response = $this->client->request('GET', $this->baseUrl . $endpoint, [

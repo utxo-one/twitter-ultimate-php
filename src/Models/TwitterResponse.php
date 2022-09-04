@@ -2,7 +2,7 @@
 
 namespace UtxoOne\TwitterUltimatePhp\Models;
 
-use \Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class TwitterResponse
 {
