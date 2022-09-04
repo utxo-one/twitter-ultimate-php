@@ -9,6 +9,12 @@ use UtxoOne\TwitterUltimatePhp\Models\Users;
 
 class ListClient extends BaseClient
 {
+    /**
+     * Get List Details
+     *
+     * @param string $id
+     * @return TwitterList
+     */
     public function getList(string $id): TwitterList
     {
         $response = $this->get('lists/' . $id, [
