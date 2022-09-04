@@ -4,7 +4,7 @@ namespace UtxoOne\TwitterUltimatePhp\Clients;
 
 use UtxoOne\TwitterUltimatePhp\Models\Users;
 
-class BlocksClient extends BaseClient
+class BlockClient extends BaseClient
 {
     public function getBlocks(string $id): Users
     {

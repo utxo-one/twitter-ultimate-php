@@ -3,8 +3,9 @@
 use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 use UtxoOne\TwitterUltimatePhp\Models\User;
+use UtxoOne\TwitterUltimatePhp\Models\Users;
 
-class UserClientest extends BaseClientTest
+class UserClienTest extends BaseClientTest
 {
     /** @group getUserByUsername */
     public function testGetUserByUsername(): void
@@ -41,5 +42,25 @@ class UserClientest extends BaseClientTest
 
         $this->assertInstanceOf(Tweets::class, $response);
         $this->assertAllTweetFieldsAreSet($response);
+    }
+
+    /** @group getFollowers */
+    public function testGetFollowers(): void
+    {
+        $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+        $response = $client->getFollowers($_ENV['TWITTER_ADMIN_USER_ID']);
+
+        $this->assertInstanceOf(Users::class, $response);
+    }
+
+    /** @group getFollowing */
+    public function testGetFollowing(): void
+    {
+        $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+        $response = $client->getFollowing($_ENV['TWITTER_ADMIN_USER_ID']);
+
+        $this->assertInstanceOf(Users::class, $response);
     }
 }

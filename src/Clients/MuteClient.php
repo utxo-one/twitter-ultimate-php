@@ -4,7 +4,7 @@ namespace UtxoOne\TwitterUltimatePhp\Clients;
 
 use UtxoOne\TwitterUltimatePhp\Models\Users;
 
-class MutesClient extends BaseClient
+class MuteClient extends BaseClient
 {
     public function getMutes(string $id): Users
     {

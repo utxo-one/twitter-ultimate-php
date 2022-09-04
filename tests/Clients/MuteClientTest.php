@@ -1,16 +1,15 @@
 <?php
 
-use UtxoOne\TwitterUltimatePhp\Clients\FollowsClient;
-use UtxoOne\TwitterUltimatePhp\Clients\MutesClient;
+use UtxoOne\TwitterUltimatePhp\Clients\MuteClient;
 use UtxoOne\TwitterUltimatePhp\Models\Users;
 
-class MutesClientTest extends BaseClientTest
+class MuteClientTest extends BaseClientTest
 {
     /** @group getMutes */
     public function testGetMutes(): void
     {
         $this->markTestIncomplete('Unauthorized Authentication');
-        $client = new MutesClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+        $client = new MuteClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
         $response = $client->getMutes($_ENV['TWITTER_ADMIN_USER_ID']);
 
