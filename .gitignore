@@ -1,4 +1,4 @@
 .env
 vendor/
 .phpdoc/
-.phpunit.result.cache
+*.cache
