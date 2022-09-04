@@ -1,10 +1,12 @@
 <?php
 
 use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
+use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 use UtxoOne\TwitterUltimatePhp\Models\User;
 
 class UserClientest extends BaseClientTest
 {
+    /** @group getUserByUsername */
     public function testGetUserByUsername(): void
     {
         $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
@@ -15,6 +17,7 @@ class UserClientest extends BaseClientTest
         $this->assertSame('utxoONE', $response->getUsername());
     }
 
+    /** @group getUserById */
     public function testGetUserById(): void
     {
         $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
@@ -27,5 +30,16 @@ class UserClientest extends BaseClientTest
         $this->assertFalse($response->isVerified());
         $this->assertSame('2022-08-14T21:32:08.000Z', $response->getCreatedAt());
 
+    }
+
+    /** @group getLikedTweets */
+    public function testGetLikedTweets(): void
+    {
+        $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+        $response = $client->getLikedTweets($_ENV['TWITTER_ADMIN_USER_ID']);
+
+        $this->assertInstanceOf(Tweets::class, $response);
+        $this->assertAllTweetFieldsAreSet($response);
     }
 }

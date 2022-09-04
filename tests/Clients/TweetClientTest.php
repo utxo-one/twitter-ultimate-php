@@ -3,6 +3,7 @@
 use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
 use UtxoOne\TwitterUltimatePhp\Models\Tweet;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
+use UtxoOne\TwitterUltimatePhp\Models\Users;
 
 class TweetClientTest extends BaseClientTest
 {
@@ -44,5 +45,15 @@ class TweetClientTest extends BaseClientTest
         foreach ($response->all() as $tweet) {
             $this->assertTweetFieldsAreSet($tweet);
         }
+    }
+
+    /** @group getLikingUsers */
+    public function testGetLikingUsers(): void
+    {
+        $client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+        $response = $client->getLikingUsers('1565628118001455105');
+
+        $this->assertInstanceOf(Users::class, $response);
     }
 }

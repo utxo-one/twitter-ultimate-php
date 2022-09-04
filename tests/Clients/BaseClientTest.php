@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use UtxoOne\TwitterUltimatePhp\Client\Client;
 use UtxoOne\TwitterUltimatePhp\Models\Tweet;
+use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 
 class BaseClientTest extends TestCase
 {
@@ -22,6 +23,12 @@ class BaseClientTest extends TestCase
         $this->assertNotEmpty($tweet->getLang());
         $this->assertNotEmpty($tweet->getSource());
         $this->assertNotEmpty($tweet->getPublicMetrics());
-        $this->assertNotEmpty($tweet->getEntities());
+    }
+
+    public function assertAllTweetFieldsAreSet(Tweets $tweets): void
+    {
+        foreach ($tweets->all() as $tweet) {
+            $this->assertTweetFieldsAreSet($tweet);
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace UtxoOne\TwitterUltimatePhp\Clients;
 
 use UtxoOne\TwitterUltimatePhp\Models\Tweet;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
+use UtxoOne\TwitterUltimatePhp\Models\Users;
 
 class TweetClient extends BaseClient
 {
@@ -33,5 +34,14 @@ class TweetClient extends BaseClient
         ]);
 
         return new Tweets($response->getData());
+    }
+
+    public function getLikingUsers(string $id): Users
+    {
+        $response = $this->get('tweets/' . $id . '/liking_users', [
+            'user.fields' => $this->userFields,
+        ]);
+
+        return new Users($response->getData());
     }
 }
