@@ -52,4 +52,22 @@ class UserClient extends BaseClient
 
         return new Users($response->getData());
     }
+
+    public function follow(string $authUserId, string $userId)
+    {
+        $response = $this->post('users/' . $authUserId . '/following', [
+            'target_user_id' => $userId,
+        ]);
+
+        return $response;
+    }
+
+    public function unfollow(string $authUserId, string $userId)
+    {
+        $response = $this->delete('users/' . $authUserId . '/following/' . $userId, [
+
+        ]);
+ 
+        return $response;
+    }
 }

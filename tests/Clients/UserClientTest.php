@@ -62,4 +62,35 @@ class UserClienTest extends BaseClientTest
 
         $this->assertInstanceOf(Users::class, $response);
     }
+
+    /** @group follow */
+    public function testFollow(): void
+    {
+        $client = new UserClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $response = $client->follow($_ENV['TWITTER_ADMIN_USER_ID'], '12');
+
+        $this->assertArrayHasKey('following', $response->getData());
+    }
+
+    /** @group unfollow */
+    public function testUnfollow(): void
+    {
+        $client = new UserClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $client->follow($_ENV['TWITTER_ADMIN_USER_ID'], '12');
+        $response = $client->unfollow($_ENV['TWITTER_ADMIN_USER_ID'], '12');
+
+        $this->assertArrayHasKey('following', $response->getData());
+    }
 }
