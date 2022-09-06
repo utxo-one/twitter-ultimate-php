@@ -5,7 +5,7 @@ use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 use UtxoOne\TwitterUltimatePhp\Models\User;
 use UtxoOne\TwitterUltimatePhp\Models\Users;
 
-class UserClienTest extends BaseClientTest
+class UserClientTest extends BaseClientTest
 {
     /** @group getUserByUsername */
     public function testGetUserByUsername(): void
@@ -92,5 +92,53 @@ class UserClienTest extends BaseClientTest
         $response = $client->unfollow($_ENV['TWITTER_ADMIN_USER_ID'], '12');
 
         $this->assertArrayHasKey('following', $response->getData());
+    }
+
+    /** @group block */
+    public function testBlock(): void
+    {
+        $client = new UserClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $response = $client->block($_ENV['TWITTER_ADMIN_USER_ID'], '12');
+
+        $this->assertArrayHasKey('blocking', $response->getData());
+    }
+
+    /** @group unblock */
+    public function testUnblock(): void
+    {
+        $client = new UserClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $client->block($_ENV['TWITTER_ADMIN_USER_ID'], '12');
+        $response = $client->unblock($_ENV['TWITTER_ADMIN_USER_ID'], '12');
+
+        $this->assertArrayHasKey('blocking', $response->getData());
+    }
+
+    /** @group getBlocks */
+    public function testGetBlocks(): void
+    {
+        $this->markTestIncomplete('Unauthorized Authentication');
+        $client = new UserClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+            bearerToken: $_ENV['TWITTER_BEARER_TOKEN'],
+        );
+
+        $response = $client->getBlocks($_ENV['TWITTER_ADMIN_USER_ID']);
+
+        $this->assertInstanceOf(Users::class, $response);
     }
 }
