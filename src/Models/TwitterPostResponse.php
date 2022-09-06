@@ -13,7 +13,5 @@ class TwitterPostResponse
         if (isset($this->response->data)) {
             return (array)$this->response->data;
         }
-        
-        return $this->response;
     }
 }

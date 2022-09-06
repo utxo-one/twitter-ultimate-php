@@ -64,9 +64,32 @@ class UserClient extends BaseClient
 
     public function unfollow(string $authUserId, string $userId)
     {
-        $response = $this->delete('users/' . $authUserId . '/following/' . $userId, [
+        $response = $this->delete('users/' . $authUserId . '/following/' . $userId, []);
+ 
+        return $response;
+    }
 
+    public function getBlocks(string $id): Users
+    {
+        $response = $this->get('users/' . $id . '/blocking', [
+            'user.fields' => $this->userFields,
         ]);
+
+        return new Users($response->getData());
+    }
+
+    public function block(string $authUserId, string $userId)
+    {
+        $response = $this->post('users/' . $authUserId . '/blocking', [
+            'target_user_id' => $userId,
+        ]);
+
+        return $response;
+    }
+
+    public function unblock(string $authUserId, string $userId)
+    {
+        $response = $this->delete('users/' . $authUserId . '/blocking/' . $userId, []);
  
         return $response;
     }
