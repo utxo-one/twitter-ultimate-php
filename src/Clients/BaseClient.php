@@ -4,6 +4,8 @@ namespace UtxoOne\TwitterUltimatePhp\Clients;
 
 use UtxoOne\TwitterUltimatePhp\Models\TwitterResponse;
 use Abraham\TwitterOAuth\TwitterOAuth;
+use Exception;
+use UtxoOne\TwitterUltimatePhp\Models\TwitterPostResponse;
 
 class BaseClient
 {
@@ -136,13 +138,13 @@ class BaseClient
     public function __construct(
         ?string $apiKey = null,
         ?string $apiSecret = null,
-        ?string $accessKey = null,
+        ?string $accessToken = null,
         ?string $accessSecret = null,
         ?string $bearerToken = null,
     ) {
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
-        $this->accessKey = $accessKey;
+        $this->accessKey = $accessToken;
         $this->accessSecret = $accessSecret;
         $this->baseUrl = 'https://api.twitter.com/2/';
         $this->bearerToken = $bearerToken;
@@ -185,6 +187,85 @@ class BaseClient
         }
 
         return new TwitterResponse($response);
+    }
+
+    /**
+     * Make a POST request to the Twitter API.
+     *
+     * @param string $endpoint
+     * @param array|null $params
+     * @return TwitterResponse
+     */
+    public function post(string $endpoint, ?array $data = null): TwitterPostResponse
+    {
+        try {
+            $connection = new TwitterOAuth($this->apiKey, $this->apiSecret, $this->accessKey, $this->accessSecret);
+            $connection->setApiVersion('2');
+
+            $response = $connection->post($endpoint, $data, true);
+
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
+        if (isset($response->errors)) {
+            throw new \Exception($response->errors[0]->message);
+        }
+
+        return new TwitterPostResponse($response);
+    }
+
+    /**
+     * Make a DELETE request to the Twitter API.
+     *
+     * @param string $endpoint
+     * @param array|null $params
+     * @return TwitterResponse
+     */
+    public function delete(string $endpoint, ?array $data = null): TwitterPostResponse
+    {
+        try {
+            $connection = new TwitterOAuth($this->apiKey, $this->apiSecret, $this->accessKey, $this->accessSecret);
+            $connection->setApiVersion('2');
+
+            $response = $connection->delete($endpoint, $data);
+
+            
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
+        if (isset($response->errors)) {
+            throw new \Exception($response->errors[0]->message);
+        }
+
+        return new TwitterPostResponse($response);
+    }
+
+    /**
+     * Make a PUT request to the Twitter API.
+     *
+     * @param string $endpoint
+     * @param array|null $params
+     * @return TwitterResponse
+     */
+    public function put(string $endpoint, ?array $data = null): TwitterPostResponse
+    {
+        try {
+            $connection = new TwitterOAuth($this->apiKey, $this->apiSecret, $this->accessKey, $this->accessSecret);
+            $connection->setApiVersion('2');
+
+            $response = $connection->put($endpoint, $data);
+            
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+
+        if (isset($response->errors)) {
+            throw new \Exception($response->errors[0]->message);
+        }
+
+        return new TwitterPostResponse($response);
     }
 
     public function getRequestToken(string $oauthCallback): array
