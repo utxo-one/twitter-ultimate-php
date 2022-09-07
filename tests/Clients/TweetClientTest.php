@@ -80,6 +80,8 @@ class TweetClientTest extends BaseClientTest
         $response = $client->tweet('Hello World!');
 
         $this->assertInstanceOf(Tweet::class, $response);
+
+        $client->deleteTweet($response->getId());
     }
 
     /** @group deleteTweet */
