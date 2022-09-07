@@ -1,6 +1,7 @@
-## Twitter Ultimate PHP (WORK IN PROGRESS)
+## Twitter Ultimate PHP
 
-An opinionated API Wrapper implementation for the Twitter v2 API. Closely follows the Twitter Postman Library naming conventions.
+A complete and opinionated API Wrapper implementation for the Twitter v2 API. Full docblocks for all methods and strict
+return types make it easy for developers by providing all the method names and parameters to your IDE.
 
 ### Prerequisites
 
@@ -19,7 +20,54 @@ An opinionated API Wrapper implementation for the Twitter v2 API. Closely follow
 
 ### Tweet Client
 
-Get Tweet Details
+The tweet client can be initialized either to get public information, or to perform authenticated actions.
+
+#### Public API Calls
+
+You only need to provide your `bearerToken` to initialize a tweet client that accesses public information.
+
+```php
+use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
+
+$client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+$tweet = $client->getTweet('1272846378268347');
+```
+#### Authenticated API Calls
+
+To make an authenticated API call, you need to provide your `apiToken` , `apiSecret`, `accessToken`, `accessSecret`.
+Access tokens are generated after the user authenticates your app.
+
+```php
+use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
+
+$client = new TweetClient(
+    apiKey: $_ENV['TWITTER_API_KEY'], 
+    apiSecret: $_ENV['TWITTER_API_SECRET'], 
+    accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+    accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+);
+
+$tweet = $client->tweet('Hello World!');
+```
+
+#### Available Tweet Client Methods:
+
+ - getTweet()
+ - getTweets()
+ - getQuoteTweets()
+ - getLikingUsers()
+ - getRetweetedByUsers()
+ - tweet()
+ - deleteTweet()
+ - likeTweet()
+ - unlikeTweet()
+ - retweet()
+ - unrtweet()
+ - bookmarkTweet()
+ - unbookmarkTweet()
+
+`getTweet()`
 
 ```php
 use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
@@ -46,7 +94,7 @@ $tweet->getContextAnnotations();
 $tweet->isPossiblySensitive();
 $tweet->getAttachements();
 ```
-Get Tweets
+`getTweets()`
 
 ```php
 use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
@@ -59,48 +107,6 @@ foreach($tweets as $tweet) {
   // ...
 }
 ```
-Get Quote Tweets
-
-```php
-use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
-
-$client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
-$quoteTweets = $client->getQuoteTweets('1565628118001455105')->all();
-
-foreach($quoteTweets as $quoteTweet) {
-  $quoteTweet->getId();
-  // ...
-}
-```
-
-Create a Tweet
-
-```php
-use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
-
-$client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
-$tweet = $client->tweet('Hello world! I am a new tweet!');
-
-$tweet->getId();
-```
-
-#### Available Methods:
-
- - getTweet()
- - getTweets()
- - getQuoteTweets()
- - getLikingUsers()
- - getRetweetedByUsers()
- - tweet()
- - deleteTweet()
- - likeTweet()
- - unlikeTweet()
- - retweet()
- - unrtweet()
- - bookmarkTweet()
- - unbookmarkTweet()
-
-
 ### User Management Methods
 
 Getting a User's Followers
