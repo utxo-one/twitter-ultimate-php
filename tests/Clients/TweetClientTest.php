@@ -66,4 +66,38 @@ class TweetClientTest extends BaseClientTest
 
         $this->assertInstanceOf(Users::class, $response);
     }
+
+    /** @group tweet */
+    public function testTweet(): void
+    {
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $response = $client->tweet('Hello World!');
+
+        $this->assertInstanceOf(Tweet::class, $response);
+    }
+
+    /** @group deleteTweet */
+    public function testDeleteTweet(): void
+    {
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $response = $client->tweet('Hello World!');
+
+        $this->assertInstanceOf(Tweet::class, $response);
+
+        $response = $client->deleteTweet($response->getId());
+
+        $this->assertTrue($response);
+    }
 }

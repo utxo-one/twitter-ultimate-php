@@ -53,4 +53,24 @@ class TweetClient extends BaseClient
 
         return new Users($response->getData());
     }
+
+    public function tweet(string $text): Tweet
+    {
+        $response = $this->post('tweets', [
+            'text' => $text,
+        ]);
+
+        return new Tweet($response->getData());
+    }
+
+    public function deleteTweet(string $id): bool
+    {
+        $response = $this->delete('tweets/' . $id, []);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
 }
