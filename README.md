@@ -65,13 +65,42 @@ Get Quote Tweets
 use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
 
 $client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
-$quoteTweets = $client->getQuoteTweets(['1565628118001455105', '1565999511536914433'])->all();
+$quoteTweets = $client->getQuoteTweets('1565628118001455105')->all();
 
 foreach($quoteTweets as $quoteTweet) {
   $quoteTweet->getId();
   // ...
 }
 ```
+
+Create a Tweet
+
+```php
+use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
+
+$client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+$tweet = $client->tweet('Hello world! I am a new tweet!');
+
+$tweet->getId();
+```
+
+#### Available Methods:
+
+ - getTweet()
+ - getTweets()
+ - getQuoteTweets()
+ - getLikingUsers()
+ - getRetweetedByUsers()
+ - tweet()
+ - deleteTweet()
+ - likeTweet()
+ - unlikeTweet()
+ - retweet()
+ - unrtweet()
+ - bookmarkTweet()
+ - unbookmarkTweet()
+
+
 ### User Management Methods
 
 Getting a User's Followers
