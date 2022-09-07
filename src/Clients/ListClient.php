@@ -5,6 +5,7 @@ namespace UtxoOne\TwitterUltimatePhp\Clients;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 use UtxoOne\TwitterUltimatePhp\Models\TwitterList;
 use UtxoOne\TwitterUltimatePhp\Models\TwitterLists;
+use UtxoOne\TwitterUltimatePhp\Models\TwitterPostResponse;
 use UtxoOne\TwitterUltimatePhp\Models\Users;
 
 class ListClient extends BaseClient
@@ -86,4 +87,111 @@ class ListClient extends BaseClient
 
         return new TwitterLists($response->getData());
     }
+
+    public function createList(string $name, string $description = null, ?bool $private = false): TwitterList
+    {
+        $response = $this->post('lists', [
+            'name' => $name,
+            'description' => $description,
+            'private' => $private,
+        ]);
+
+        return new TwitterList($response->getData());
+    }
+
+    public function updateList(string $id, string $name, string $description = null, ?bool $private = false): TwitterList
+    {
+        $response = $this->put('lists/' . $id, [
+            'name' => $name,
+            'description' => $description,
+            'private' => $private,
+        ]);
+
+        return new TwitterList($response->getData());
+    }
+
+    public function deleteList(string $id): bool
+    {
+        $response = $this->delete('lists/' . $id, []);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function addListMember(string $id, string $userId): bool
+    {
+        $response = $this->post('lists/' . $id . '/members', [
+            'user_id' => $userId,
+        ]);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function removeListMember(string $id, string $userId): bool
+    {
+        $response = $this->delete('lists/' . $id . '/members/' . $userId, []);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function followList(string $listId, string $userId): bool
+    {
+        $response = $this->post('users/' . $userId . '/followed_lists', [
+            'list_id' => $listId,
+        ]);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function unfollowList(string $listId, string $userId): bool
+    {
+        $response = $this->delete('users/' . $userId . '/followed_lists/' . $listId, []);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function pinList(string $listId, string $userId): bool
+    {
+        $response = $this->post('users/' . $userId . '/pinned_lists', [
+            'list_id' => $listId,
+        ]);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function unpinList(string $listId, string $userId): bool
+    {
+        $response = $this->delete('users/' . $userId . '/pinned_lists/' . $listId, []);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+
 }

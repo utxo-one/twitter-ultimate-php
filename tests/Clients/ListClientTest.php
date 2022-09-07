@@ -84,4 +84,240 @@ class ListClientTest extends BaseClientTest
 
         $this->assertInstanceOf(TwitterLists::class, $response);
     }
+
+    /** @group createList */
+    public function testCreateList(): void
+    {
+        $client = new ListClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $response = $client->createList(
+            name: 'test list',
+            description: 'test list description',
+            private: false,
+        );
+
+        $this->assertInstanceOf(TwitterList::class, $response);
+
+        $client->deleteList($response->getId());
+    }
+
+    /** @group updateList */
+    public function testUpdateList(): void
+    {
+        $this->markTestIncomplete('requires higher authentication');
+        $client = new ListClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $response = $client->updateList(
+            id: '1567321249289756672',
+            name: 'test list',
+            description: 'test list description',
+            private: false,
+        );
+
+        $this->assertInstanceOf(TwitterList::class, $response);
+    }
+
+    /** @group deleteList */
+    public function testDeleteList(): void
+    {
+        $client = new ListClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $newListId = $client->createList(
+            name: 'test list',
+            description: 'test list description',
+            private: false,
+        )->getId();
+
+        $response = $client->deleteList($newListId);
+
+        $this->assertTrue($response);
+    }
+
+    /** @group addListMember */
+    public function testAddListMember(): void
+    {
+        $client = new ListClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $list = $client->createList(
+            name: 'test list',
+            description: 'test list description',
+            private: false,
+        );
+
+        $response = $client->addListMember(
+            id: $list->getId(),
+            userId: 12,
+        );
+
+        $this->assertTrue($response);
+
+        $client->deleteList($list->getId());
+    }
+
+    /** @group removeListMember */
+    public function testRemoveListMember(): void
+    {
+        $client = new ListClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $list = $client->createList(
+            name: 'test list',
+            description: 'test list description',
+            private: false,
+        );
+
+        $client->addListMember(
+            id: $list->getId(),
+            userId: 12,
+        );
+
+        $response = $client->removeListMember(
+            id: $list->getId(),
+            userId: 12,
+        );
+
+        $this->assertTrue($response);
+
+        $client->deleteList($list->getId());
+    }
+
+    /** @group followList */
+    public function testFollowList(): void
+    {
+        $client = new ListClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $list = $client->createList(
+            name: 'test list',
+            description: 'test list description',
+            private: false,
+        );
+
+        $response = $client->followList(
+            listId: $list->getId(),
+            userId: $_ENV['TWITTER_ADMIN_USER_ID'],
+        );
+
+        $this->assertTrue($response);
+
+        $client->deleteList($list->getId());
+    }
+
+    /** @group unfollowList */
+    public function testUnfollowList(): void
+    {
+        $client = new ListClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $list = $client->createList(
+            name: 'test list',
+            description: 'test list description',
+            private: false,
+        );
+
+        $client->followList(
+            listId: $list->getId(),
+            userId: $_ENV['TWITTER_ADMIN_USER_ID'],
+        );
+
+        $response = $client->unfollowList(
+            listId: $list->getId(),
+            userId: $_ENV['TWITTER_ADMIN_USER_ID'],
+        );
+
+        $this->assertTrue($response);
+
+        $client->deleteList($list->getId());
+    }
+
+    /** @group pinList */
+    public function testPinList(): void
+    {
+        $client = new ListClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $list = $client->createList(
+            name: 'test list',
+            description: 'test list description',
+            private: false,
+        );
+
+        $response = $client->pinList(
+            userId: $_ENV['TWITTER_ADMIN_USER_ID'],
+            listId: $list->getId(),
+        );
+
+        $this->assertTrue($response);
+
+        $client->deleteList($list->getId());
+    }
+
+    /** @group unpinList */
+    public function testUnpinList(): void
+    {
+        $client = new ListClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $list = $client->createList(
+            name: 'test list',
+            description: 'test list description',
+            private: false,
+        );
+
+        $client->pinList(
+            userId: $_ENV['TWITTER_ADMIN_USER_ID'],
+            listId: $list->getId(),
+        );
+
+        $response = $client->unpinList(
+            userId: $_ENV['TWITTER_ADMIN_USER_ID'],
+            listId: $list->getId(),
+        );
+
+        $this->assertTrue($response);
+
+        $client->deleteList($list->getId());
+    }
+
+
 }
