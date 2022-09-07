@@ -109,11 +109,60 @@ foreach($tweets as $tweet) {
 ```
 ### User Management Methods
 
-Getting a User's Followers
+##### Getting a User's Details
 
 ```php
-   $client = new Follows($bearerToken);
-   $followers = $client->getFollowers($userId)->all(); // Array of Users
+
+use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
+
+$client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+$user = $client->getUserByUsername('utxoone');
+$user->getId();
+$user->getName();
+$user->getUsername();
+$user->getCreatedAt();
+$user->getDescription();
+$user->getLocation();
+$user->getPinnedTweetId();
+$user->getProfileImageUrl();
+$user->getUrl();
+$user->isVerified();
+$user->isProtected();
+$user->getEntities();
 ```
+
+##### Getting a User's Liked Tweets
+
+```php
+
+use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
+
+$client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+$user = $client->getUserByUsername('utxoone');
+$likedTweets = $client->getLikedTweets($user->getId());
+
+foreach ($likedTweets as $likedTweet) {
+  $likedTweet->getId();
+  $likedTweet->getText();
+  // ...
+}
+```
+
+##### Available Methods
+
+ - `getUserByUsername()`
+ - `getUserById()`
+ - `getLikedTweets()`
+ - `getFollowers()`
+ - `getFollowing()`
+ - `follow()`
+ - `unfollow()`
+ - `getBlocks()`
+ - `block()`
+ - `unblock()`
+ - `mute()`
+ - `unmute()`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
