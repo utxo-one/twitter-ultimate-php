@@ -53,21 +53,21 @@ $tweet = $client->tweet('Hello World!');
 
 #### Available Tweet Client Methods:
 
- - getTweet()
- - getTweets()
- - getQuoteTweets()
- - getLikingUsers()
- - getRetweetedByUsers()
- - tweet()
- - deleteTweet()
- - likeTweet()
- - unlikeTweet()
- - retweet()
- - unrtweet()
- - bookmarkTweet()
- - unbookmarkTweet()
+ - `getTweet()`
+ - `getTweets()`
+ - `getQuoteTweets()`
+ - `getLikingUsers()`
+ - `getRetweetedByUsers()`
+ - `tweet()`
+ - `deleteTweet()`
+ - `likeTweet()`
+ - `unlikeTweet()`
+ - `retweet()`
+ - `unrtweet()`
+ - `bookmarkTweet()`
+ - `unbookmarkTweet()`
 
-`getTweet()`
+#### Get Tweet Details
 
 ```php
 use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
@@ -94,7 +94,7 @@ $tweet->getContextAnnotations();
 $tweet->isPossiblySensitive();
 $tweet->getAttachements();
 ```
-`getTweets()`
+#### Get Multiple Tweet Details
 
 ```php
 use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
@@ -149,6 +149,22 @@ foreach ($likedTweets as $likedTweet) {
   // ...
 }
 ```
+#### Follow a User
+
+```php
+use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
+
+$client = new UserClient(
+    apiKey: $_ENV['TWITTER_API_KEY'], 
+    apiSecret: $_ENV['TWITTER_API_SECRET'], 
+    accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+    accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+);
+
+$user = $client->getUserByUsername('utxo_one');
+$tweet = $client->follow($user->getId());
+
+```
 
 ##### Available Methods
 
@@ -165,4 +181,67 @@ foreach ($likedTweets as $likedTweet) {
  - `mute()`
  - `unmute()`
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### List Management Methods
+
+##### Getting a List's Details
+
+```php
+
+use UtxoOne\TwitterUltimatePhp\Clients\ListClient;
+
+$client = new ListClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+$list = $client->getList('64651656516516516');
+$list->getId();
+$list->getFollowerCount();
+$list->getCreatedAt();
+$list->getMemberCount();
+$list->isPrivate();
+$list->getDescription();
+$list->getOwnerId();
+
+```
+
+#### Create a List
+
+```php
+use UtxoOne\TwitterUltimatePhp\Clients\ListClient;
+
+$client = new ListClient(
+    apiKey: $_ENV['TWITTER_API_KEY'], 
+    apiSecret: $_ENV['TWITTER_API_SECRET'], 
+    accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+    accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+);
+
+$list = $client->createList(
+  name: 'My New List',
+  description: 'My New List Description',
+  private: false,
+);
+
+$list->getId();
+
+```
+
+#### Available Methods
+
+ - `getList()`
+ - `getUserOwnedLists()`
+ - `getListTweets()`
+ - `getListMembers()`
+ - `getUserMemberships()`
+ - `getListFollowers()`
+ - `getUserFollowedLists()`
+ - `getUserPinnedLists()`
+ - `createList()`
+ - `updateList()`
+ - `deleteList()`
+ - `addListMember()`
+ - `removeListMember()`
+ - `followList()`
+ - `unfollowList()`
+ - `pinList()`
+ - `unpinList()`
+
+
