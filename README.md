@@ -244,4 +244,27 @@ $list->getId();
  - `pinList()`
  - `unpinList()`
 
+ ### Space Management Methods
+
+##### Getting a Space's Details
+
+```php
+
+use UtxoOne\TwitterUltimatePhp\Clients\SpaceClient;
+
+$client = new SpaceClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+$space = $client->getSpace('64651656516516516');
+$space->getId();
+$space->getTitle();
+$space->getCreatedAt();
+$space->getUpdatedAt();
+$space->getHostIds();
+$space->getState();
+$space->isTicketed();
+$space->getLand();
+$space->getCreatorId();
+
+```
+
 
