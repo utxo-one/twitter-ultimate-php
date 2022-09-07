@@ -66,4 +66,162 @@ class TweetClientTest extends BaseClientTest
 
         $this->assertInstanceOf(Users::class, $response);
     }
+
+    /** @group tweet */
+    public function testTweet(): void
+    {
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $response = $client->tweet('Hello World!');
+
+        $this->assertInstanceOf(Tweet::class, $response);
+    }
+
+    /** @group deleteTweet */
+    public function testDeleteTweet(): void
+    {
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $response = $client->tweet('Hello World!');
+
+        $this->assertInstanceOf(Tweet::class, $response);
+
+        $response = $client->deleteTweet($response->getId());
+
+        $this->assertTrue($response);
+    }
+
+    /** @group likeTweet */
+    public function testLikeTweet(): void
+    {
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $tweet = $client->tweet('Hello World!');
+
+        $response = $client->likeTweet($_ENV['TWITTER_ADMIN_USER_ID'], $tweet->getId());
+
+        $this->assertTrue($response);
+
+        $client->deleteTweet($tweet->getId());
+    }
+
+    /** @group unlikeTweet */
+    public function testUnlikeTweet(): void
+    {
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $tweet = $client->tweet('Hello World!');
+
+        $client->likeTweet($_ENV['TWITTER_ADMIN_USER_ID'], $tweet->getId());
+
+        $response = $client->unlikeTweet($_ENV['TWITTER_ADMIN_USER_ID'], $tweet->getId());
+
+        $this->assertTrue($response);
+
+        $client->deleteTweet($tweet->getId());
+    }
+
+    /** @group retweet */
+    public function testRetweet(): void
+    {
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $tweet = $client->tweet('Hello World!');
+
+        $response = $client->retweet($_ENV['TWITTER_ADMIN_USER_ID'], $tweet->getId());
+
+        $this->assertTrue($response);
+
+        $client->deleteTweet($tweet->getId());
+    }
+
+    /** @group unretweet */
+    public function testUnretweet(): void
+    {
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $tweet = $client->tweet('Hello World!');
+
+        $client->retweet($_ENV['TWITTER_ADMIN_USER_ID'], $tweet->getId());
+
+        $response = $client->unretweet($_ENV['TWITTER_ADMIN_USER_ID'], $tweet->getId());
+
+        $this->assertTrue($response);
+
+        $client->deleteTweet($tweet->getId());
+    }
+
+    /** @group bookmarkTweet */
+    public function testBookmarkTweet(): void
+    {
+        $this->markTestIncomplete('OAuth 2.0 user context required');
+
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $tweet = $client->tweet('Hello World!');
+
+        $response = $client->bookmarkTweet($_ENV['TWITTER_ADMIN_USER_ID'], $tweet->getId());
+
+        $this->assertTrue($response);
+
+        $client->deleteTweet($tweet->getId());
+    }
+
+    /** @group unbookmarkTweet */
+    public function testUnbookmarkTweet(): void
+    {
+        $this->markTestIncomplete('OAuth 2.0 user context required');
+
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $tweet = $client->tweet('Hello World!');
+
+        $client->bookmarkTweet($_ENV['TWITTER_ADMIN_USER_ID'], $tweet->getId());
+
+        $response = $client->unbookmarkTweet($_ENV['TWITTER_ADMIN_USER_ID'], $tweet->getId());
+
+        $this->assertTrue($response);
+
+        $client->deleteTweet($tweet->getId());
+    }
 }

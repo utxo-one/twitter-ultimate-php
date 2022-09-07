@@ -93,4 +93,20 @@ class UserClient extends BaseClient
  
         return $response;
     }
+
+    public function mute(string $authUserId, string $userId)
+    {
+        $response = $this->post('users/' . $authUserId . '/muting', [
+            'target_user_id' => $userId,
+        ]);
+
+        return $response;
+    }
+
+    public function unmute(string $authUserId, string $userId)
+    {
+        $response = $this->delete('users/' . $authUserId . '/muting/' . $userId, []);
+ 
+        return $response;
+    }
 }

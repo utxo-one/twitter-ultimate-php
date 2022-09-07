@@ -53,4 +53,97 @@ class TweetClient extends BaseClient
 
         return new Users($response->getData());
     }
+
+    public function tweet(string $text): Tweet
+    {
+        $response = $this->post('tweets', [
+            'text' => $text,
+        ]);
+
+        return new Tweet($response->getData());
+    }
+
+    public function deleteTweet(string $tweetId): bool
+    {
+        $response = $this->delete('tweets/' . $tweetId, []);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function likeTweet(string $authUserId, string $tweetId): bool
+    {
+        $response = $this->post('users/' . $authUserId . '/likes', [
+            'tweet_id' => $tweetId,
+        ]);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function unlikeTweet(string $authUserId, string $tweetId): bool
+    {
+        $response = $this->delete('users/' . $authUserId . '/likes/' . $tweetId, []);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function retweet(string $authUserId, string $tweetId): bool
+    {
+        $response = $this->post('users/' . $authUserId . '/retweets', [
+            'tweet_id' => $tweetId,
+        ]);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function unretweet(string $authUserId, string $tweetId): bool
+    {
+        $response = $this->delete('users/' . $authUserId . '/retweets/' . $tweetId, []);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function bookmarkTweet(string $authUserId, string $tweetId): bool
+    {
+        $response = $this->post('users/' . $authUserId . '/bookmarks', [
+            'tweet_id' => $tweetId,
+        ]);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function unbookmarkTweet(string $authUserId, string $tweetId): bool
+    {
+        $response = $this->delete('users/' . $authUserId . '/bookmarks/' . $tweetId, []);
+
+        if (!isset($response->response->data)) {
+            return false;
+        }
+
+        return true;
+    }
+
 }
