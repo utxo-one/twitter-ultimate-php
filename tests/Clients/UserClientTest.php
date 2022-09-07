@@ -141,4 +141,35 @@ class UserClientTest extends BaseClientTest
 
         $this->assertInstanceOf(Users::class, $response);
     }
+
+    /** @group mute */
+    public function testMute(): void
+    {
+        $client = new UserClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $response = $client->mute($_ENV['TWITTER_ADMIN_USER_ID'], '12');
+
+        $this->assertArrayHasKey('muting', $response->getData());
+    }
+
+    /** @group unmute */
+    public function testUnmute(): void
+    {
+        $client = new UserClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+        );
+
+        $client->mute($_ENV['TWITTER_ADMIN_USER_ID'], '12');
+        $response = $client->unmute($_ENV['TWITTER_ADMIN_USER_ID'], '12');
+
+        $this->assertArrayHasKey('muting', $response->getData());
+    }
 }
