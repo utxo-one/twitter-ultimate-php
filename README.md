@@ -53,21 +53,21 @@ $tweet = $client->tweet('Hello World!');
 
 #### Available Tweet Client Methods:
 
- - getTweet()
- - getTweets()
- - getQuoteTweets()
- - getLikingUsers()
- - getRetweetedByUsers()
- - tweet()
- - deleteTweet()
- - likeTweet()
- - unlikeTweet()
- - retweet()
- - unrtweet()
- - bookmarkTweet()
- - unbookmarkTweet()
+ - `getTweet()`
+ - `getTweets()`
+ - `getQuoteTweets()`
+ - `getLikingUsers()`
+ - `getRetweetedByUsers()`
+ - `tweet()`
+ - `deleteTweet()`
+ - `likeTweet()`
+ - `unlikeTweet()`
+ - `retweet()`
+ - `unrtweet()`
+ - `bookmarkTweet()`
+ - `unbookmarkTweet()`
 
-`getTweet()`
+#### Get Tweet Details
 
 ```php
 use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
@@ -94,7 +94,7 @@ $tweet->getContextAnnotations();
 $tweet->isPossiblySensitive();
 $tweet->getAttachements();
 ```
-`getTweets()`
+#### Get Multiple Tweet Details
 
 ```php
 use UtxoOne\TwitterUltimatePhp\Clients\TweetClient;
@@ -109,11 +109,162 @@ foreach($tweets as $tweet) {
 ```
 ### User Management Methods
 
-Getting a User's Followers
+##### Getting a User's Details
 
 ```php
-   $client = new Follows($bearerToken);
-   $followers = $client->getFollowers($userId)->all(); // Array of Users
+
+use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
+
+$client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+$user = $client->getUserByUsername('utxoone');
+$user->getId();
+$user->getName();
+$user->getUsername();
+$user->getCreatedAt();
+$user->getDescription();
+$user->getLocation();
+$user->getPinnedTweetId();
+$user->getProfileImageUrl();
+$user->getUrl();
+$user->isVerified();
+$user->isProtected();
+$user->getEntities();
 ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+##### Getting a User's Liked Tweets
+
+```php
+
+use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
+
+$client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+$user = $client->getUserByUsername('utxoone');
+$likedTweets = $client->getLikedTweets($user->getId());
+
+foreach ($likedTweets as $likedTweet) {
+  $likedTweet->getId();
+  $likedTweet->getText();
+  // ...
+}
+```
+#### Follow a User
+
+```php
+use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
+
+$client = new UserClient(
+    apiKey: $_ENV['TWITTER_API_KEY'], 
+    apiSecret: $_ENV['TWITTER_API_SECRET'], 
+    accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+    accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+);
+
+$user = $client->getUserByUsername('utxo_one');
+$tweet = $client->follow($user->getId());
+
+```
+
+##### Available Methods
+
+ - `getUserByUsername()`
+ - `getUserById()`
+ - `getLikedTweets()`
+ - `getFollowers()`
+ - `getFollowing()`
+ - `follow()`
+ - `unfollow()`
+ - `getBlocks()`
+ - `block()`
+ - `unblock()`
+ - `mute()`
+ - `unmute()`
+
+### List Management Methods
+
+##### Getting a List's Details
+
+```php
+
+use UtxoOne\TwitterUltimatePhp\Clients\ListClient;
+
+$client = new ListClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+$list = $client->getList('64651656516516516');
+$list->getId();
+$list->getFollowerCount();
+$list->getCreatedAt();
+$list->getMemberCount();
+$list->isPrivate();
+$list->getDescription();
+$list->getOwnerId();
+
+```
+
+#### Create a List
+
+```php
+use UtxoOne\TwitterUltimatePhp\Clients\ListClient;
+
+$client = new ListClient(
+    apiKey: $_ENV['TWITTER_API_KEY'], 
+    apiSecret: $_ENV['TWITTER_API_SECRET'], 
+    accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+    accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+);
+
+$list = $client->createList(
+  name: 'My New List',
+  description: 'My New List Description',
+  private: false,
+);
+
+$list->getId();
+
+```
+
+#### Available Methods
+
+ - `getList()`
+ - `getUserOwnedLists()`
+ - `getListTweets()`
+ - `getListMembers()`
+ - `getUserMemberships()`
+ - `getListFollowers()`
+ - `getUserFollowedLists()`
+ - `getUserPinnedLists()`
+ - `createList()`
+ - `updateList()`
+ - `deleteList()`
+ - `addListMember()`
+ - `removeListMember()`
+ - `followList()`
+ - `unfollowList()`
+ - `pinList()`
+ - `unpinList()`
+
+ ### Space Management Methods
+
+##### Getting a Space's Details
+
+```php
+
+use UtxoOne\TwitterUltimatePhp\Clients\SpaceClient;
+
+$client = new SpaceClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+$space = $client->getSpace('64651656516516516');
+$space->getId();
+$space->getTitle();
+$space->getCreatedAt();
+$space->getUpdatedAt();
+$space->getHostIds();
+$space->getState();
+$space->isTicketed();
+$space->getLand();
+$space->getCreatorId();
+
+```
+
+
