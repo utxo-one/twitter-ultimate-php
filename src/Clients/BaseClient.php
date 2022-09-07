@@ -222,7 +222,7 @@ class BaseClient
      * @param array|null $params
      * @return TwitterResponse
      */
-    public function delete(string $endpoint, ?array $data = null): TwitterPostResponse
+    public function delete(string $endpoint, array $data): TwitterPostResponse
     {
         try {
             $connection = new TwitterOAuth($this->apiKey, $this->apiSecret, $this->accessKey, $this->accessSecret);
