@@ -38,7 +38,7 @@ class UserClient extends BaseClient
     public function getFollowers(string $id): Users
     {
         $response = $this->get('users/' . $id . '/followers', [
-            'user.fields' => 'created_at',
+            'user.fields' => $this->userFields,
         ]);
 
         return new Users($response->getData());
@@ -47,7 +47,7 @@ class UserClient extends BaseClient
     public function getFollowing(string $id): Users
     {
         $response = $this->get('users/' . $id . '/following', [
-            'user.fields' => 'created_at',
+            'user.fields' => $this->userFields,
         ]);
 
         return new Users($response->getData());
