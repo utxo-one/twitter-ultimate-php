@@ -67,4 +67,9 @@ class User
     {
         return (isset($this->data['entities']) ? $this->data['entities'] : null);
     }
+
+    public function getPublicMetrics(): ?UserPublicMetrics
+    {
+        return (isset($this->data['public_metrics']) ? new UserPublicMetrics($this->data['public_metrics']) : null);
+    }
 }

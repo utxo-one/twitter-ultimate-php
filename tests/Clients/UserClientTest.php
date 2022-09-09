@@ -3,6 +3,7 @@
 use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 use UtxoOne\TwitterUltimatePhp\Models\User;
+use UtxoOne\TwitterUltimatePhp\Models\UserPublicMetrics;
 use UtxoOne\TwitterUltimatePhp\Models\Users;
 
 class UserClientTest extends BaseClientTest
@@ -171,5 +172,19 @@ class UserClientTest extends BaseClientTest
         $response = $client->unmute($_ENV['TWITTER_ADMIN_USER_ID'], '12');
 
         $this->assertArrayHasKey('muting', $response->getData());
+    }
+
+    /** @group getPublicMetrics */
+    public function testGetPublicMetrics(): void
+    {
+        $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+        $publicMetrics = $client->getUserById($_ENV['TWITTER_ADMIN_USER_ID'])->getPublicMetrics();
+
+        $this->assertInstanceOf(UserPublicMetrics::class, $publicMetrics);
+        $this->assertIsInt($publicMetrics->getFollowersCount());
+        $this->assertIsInt($publicMetrics->getFollowingCount());
+        $this->assertIsInt($publicMetrics->getTweetCount());
+        $this->assertIsInt($publicMetrics->getListedCount());
     }
 }
