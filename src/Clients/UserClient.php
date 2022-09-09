@@ -26,28 +26,34 @@ class UserClient extends BaseClient
         return new User($response->getData());
     }
 
-    public function getLikedTweets(string $id): Tweets
+    public function getLikedTweets(string $id, ?int $maxResults = 100, ?string $paginationToken = null): Tweets
     {
         $response = $this->get('users/' . $id . '/liked_tweets', [
             'tweet.fields' => $this->tweetFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new Tweets($response->getData());
     }
 
-    public function getFollowers(string $id): Users
+    public function getFollowers(string $id, ?int $maxResults = 100, ?string $paginationToken = null): Users
     {
         $response = $this->get('users/' . $id . '/followers', [
             'user.fields' => $this->userFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new Users($response->getData());
     }
 
-    public function getFollowing(string $id): Users
+    public function getFollowing(string $id, ?int $maxResults = 100, ?string $paginationToken = null): Users
     {
         $response = $this->get('users/' . $id . '/following', [
             'user.fields' => $this->userFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new Users($response->getData());
@@ -65,14 +71,16 @@ class UserClient extends BaseClient
     public function unfollow(string $authUserId, string $userId)
     {
         $response = $this->delete('users/' . $authUserId . '/following/' . $userId, []);
- 
+
         return $response;
     }
 
-    public function getBlocks(string $id): Users
+    public function getBlocks(string $id, ?int $maxResults = 100, ?string $paginationToken = null): Users
     {
         $response = $this->get('users/' . $id . '/blocking', [
             'user.fields' => $this->userFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new Users($response->getData());
@@ -90,7 +98,7 @@ class UserClient extends BaseClient
     public function unblock(string $authUserId, string $userId)
     {
         $response = $this->delete('users/' . $authUserId . '/blocking/' . $userId, []);
- 
+
         return $response;
     }
 
@@ -106,7 +114,7 @@ class UserClient extends BaseClient
     public function unmute(string $authUserId, string $userId)
     {
         $response = $this->delete('users/' . $authUserId . '/muting/' . $userId, []);
- 
+
         return $response;
     }
 }

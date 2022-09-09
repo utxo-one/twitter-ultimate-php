@@ -4,8 +4,13 @@ namespace UtxoOne\TwitterUltimatePhp\Models;
 
 class Tweets
 {
-    public function __construct(private array $data)
+    public array $data;
+    public array $meta;
+
+    public function __construct(public array $response)
     {
+        $this->data = $response['data'];
+        $this->meta = ($response['meta'] ?? []);
     }
 
     public function all(): array
@@ -17,5 +22,15 @@ class Tweets
         }
 
         return $tweets;
+    }
+
+    public function getPaginationToken(): ?string
+    {
+        return $this->meta['next_token'];
+    }
+
+    public function getResultCount(): int
+    {
+        return $this->meta['result_count'];
     }
 }

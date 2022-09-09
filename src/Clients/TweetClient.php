@@ -17,38 +17,45 @@ class TweetClient extends BaseClient
         return new Tweet($response->getData());
     }
 
-    public function getTweets(array $tweetIds): Tweets
+    public function getTweets(array $tweetIds, ?int $maxResults = 100, ?string $paginationToken = null): Tweets
     {
         $response = $this->get('tweets', [
             'tweet.fields' => $this->tweetFields,
+            'pagination_token' => $paginationToken,
             'ids' => implode(',', $tweetIds),
         ]);
 
         return new Tweets($response->getData());
     }
 
-    public function getQuoteTweets(string $id): Tweets
+    public function getQuoteTweets(string $id, ?int $maxResults = 100, ?string $paginationToken = null): Tweets
     {
         $response = $this->get('tweets/' . $id . '/quote_tweets', [
             'tweet.fields' => $this->tweetFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new Tweets($response->getData());
     }
 
-    public function getLikingUsers(string $id): Users
+    public function getLikingUsers(string $id, ?int $maxResults = 100, ?string $paginationToken = null): Users
     {
         $response = $this->get('tweets/' . $id . '/liking_users', [
             'user.fields' => $this->userFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new Users($response->getData());
     }
 
-    public function getRetweetedByUsers(string $id): Users
+    public function getRetweetedByUsers(string $id, ?int $maxResults = 100, ?string $paginationToken = null): Users
     {
         $response = $this->get('tweets/' . $id . '/retweeted_by', [
             'user.fields' => $this->userFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new Users($response->getData());

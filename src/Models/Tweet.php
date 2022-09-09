@@ -2,12 +2,8 @@
 
 namespace UtxoOne\TwitterUltimatePhp\Models;
 
-class Tweet
+class Tweet extends BaseModel
 {
-    public function __construct(private array $data)
-    {
-    }
-
     public function getId(): string
     {
         return $this->data['id'];
