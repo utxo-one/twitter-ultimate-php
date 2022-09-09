@@ -16,10 +16,12 @@ class SpaceClient extends BaseClient
         return new Space($response->getData());
     }
 
-    public function getSpaces(array $ids): Spaces
+    public function getSpaces(array $ids, ?int $maxResults = 100, ?string $paginationToken = null): Spaces
     {
         $response = $this->get('spaces', [
             'space.fields' => $this->spaceFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
             'ids' => implode(',', $ids),
         ]);
 

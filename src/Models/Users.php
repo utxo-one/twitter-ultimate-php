@@ -2,12 +2,8 @@
 
 namespace UtxoOne\TwitterUltimatePhp\Models;
 
-class Users
+class Users extends BaseModel
 {
-    public function __construct(private array $data)
-    {
-    }
-
     public function all(): array
     {
         $users = [];
@@ -17,5 +13,15 @@ class Users
         }
 
         return $users;
+    }
+
+    public function getPaginationToken(): ?string
+    {
+        return $this->meta['next_token'];
+    }
+
+    public function getResultCount(): int
+    {
+        return $this->meta['result_count'];
     }
 }

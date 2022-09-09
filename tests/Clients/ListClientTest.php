@@ -31,7 +31,7 @@ class ListClientTest extends BaseClientTest
     {
         $client = new ListClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
-        $response = $client->getListTweets('1566433477792235520');
+        $response = $client->getListTweets('1546029449191342080');
 
         $this->assertInstanceOf(Tweets::class, $response);
     }
@@ -40,7 +40,7 @@ class ListClientTest extends BaseClientTest
     {
         $client = new ListClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
-        $response = $client->getListMembers('1566433477792235520');
+        $response = $client->getListMembers('1546029449191342080');
 
         $this->assertInstanceOf(Users::class, $response);
     }
@@ -59,8 +59,7 @@ class ListClientTest extends BaseClientTest
     {
         $client = new ListClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
-        $response = $client->getListFollowers('1566433477792235520');
-
+        $response = $client->getListFollowers('1546029449191342080');
         $this->assertInstanceOf(Users::class, $response);
     }
 
@@ -318,6 +317,27 @@ class ListClientTest extends BaseClientTest
 
         $client->deleteList($list->getId());
     }
+
+        /** @group deleteAllLists */
+        public function testDeleteAllLists(): void
+        {
+            $authClient = new ListClient(
+                apiKey: $_ENV['TWITTER_API_KEY'], 
+                apiSecret: $_ENV['TWITTER_API_SECRET'], 
+                accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+                accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+            );
+    
+            $getClient = new ListClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+    
+            $response = $getClient->getUserOwnedLists($_ENV['TWITTER_ADMIN_USER_ID']);
+    
+            foreach ($response->all() as $list) {
+                $authClient->deleteList($list->getId());
+            }
+    
+            $this->assertTrue(true);
+        }
 
 
 }

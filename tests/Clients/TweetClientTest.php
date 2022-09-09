@@ -12,10 +12,10 @@ class TweetClientTest extends BaseClientTest
     {
         $client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
-        $response = $client->getTweet('1565628118001455105');
+        $response = $client->getTweet('1564986319981498368');
 
         $this->assertInstanceOf(Tweet::class, $response);
-        $this->assertSame('1565628118001455105', $response->getId());
+        $this->assertSame('1564986319981498368', $response->getId());
         $this->assertTweetFieldsAreSet($response);
     }
 

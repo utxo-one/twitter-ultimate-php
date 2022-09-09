@@ -25,64 +25,78 @@ class ListClient extends BaseClient
         return new TwitterList($response->getData());
     }
 
-    public function getUserOwnedLists(string $id): TwitterLists
+    public function getUserOwnedLists(string $id, ?int $maxResults = 100, ?string $paginationToken = null): TwitterLists
     {
         $response = $this->get('users/' . $id . '/owned_lists', [
             'list.fields' => $this->listFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new TwitterLists($response->getData());
     }
 
-    public function getListTweets(string $id): Tweets
+    public function getListTweets(string $id, ?int $maxResults = 100, ?string $paginationToken = null): Tweets
     {
         $response = $this->get('lists/' . $id . '/tweets', [
             'tweet.fields' => $this->tweetFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new Tweets($response->getData());
     }
 
-    public function getListMembers(string $id): Users
+    public function getListMembers(string $id, ?int $maxResults = 100, ?string $paginationToken = null): Users
     {
         $response = $this->get('lists/' . $id . '/members', [
             'user.fields' => $this->userFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new Users($response->getData());
     }
 
-    public function getUserMemberships(string $id): TwitterLists
+    public function getUserMemberships(string $id, ?int $maxResults = 100, ?string $paginationToken = null): TwitterLists
     {
         $response = $this->get('users/' . $id . '/list_memberships', [
             'list.fields' => $this->listFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new TwitterLists($response->getData());
     }
 
-    public function getListFollowers(string $id): Users
+    public function getListFollowers(string $id, ?int $maxResults = 100, ?string $paginationToken = null): Users
     {
         $response = $this->get('lists/' . $id . '/followers', [
             'user.fields' => $this->userFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new Users($response->getData());
     }
 
-    public function getUserFollowedLists(string $id): TwitterLists
+    public function getUserFollowedLists(string $id, ?int $maxResults = 100, ?string $paginationToken = null): TwitterLists
     {
         $response = $this->get('users/' . $id . '/followed_lists', [
             'list.fields' => $this->listFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new TwitterLists($response->getData());
     }
 
-    public function getUserPinnedLists(string $id): TwitterLists
+    public function getUserPinnedLists(string $id, ?int $maxResults = 100, ?string $paginationToken = null): TwitterLists
     {
         $response = $this->get('users/' . $id . '/pinned_lists', [
             'list.fields' => $this->listFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
         ]);
 
         return new TwitterLists($response->getData());

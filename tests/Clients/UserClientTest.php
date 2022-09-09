@@ -24,7 +24,7 @@ class UserClientTest extends BaseClientTest
     {
         $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
-        $response = $client->getUserById($client->getUserByUsername('utxoone')->getId());
+        $response = $client->getUserById($_ENV['TWITTER_ADMIN_USER_ID']);
 
         $this->assertInstanceOf(User::class, $response);
         $this->assertSame('utxoONE', $response->getUsername());
@@ -75,6 +75,8 @@ class UserClientTest extends BaseClientTest
         );
 
         $response = $client->follow($_ENV['TWITTER_ADMIN_USER_ID'], '12');
+
+        //die(var_dump($response));
 
         $this->assertArrayHasKey('following', $response->getData());
     }
@@ -186,5 +188,18 @@ class UserClientTest extends BaseClientTest
         $this->assertIsInt($publicMetrics->getFollowingCount());
         $this->assertIsInt($publicMetrics->getTweetCount());
         $this->assertIsInt($publicMetrics->getListedCount());
+    }
+
+    /** @group getPaginationToken */
+    public function testGetPaginationToken(): void
+    {
+        $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+        $response = $client->getFollowers(
+            id: $_ENV['TWITTER_ADMIN_USER_ID'],
+            maxResults: 3
+        );
+
+        $this->assertIsString($response->getPaginationToken());
     }
 }
