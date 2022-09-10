@@ -17,7 +17,7 @@ class Spaces extends BaseModel
 
     public function getPaginationToken(): ?string
     {
-        return $this->meta['next_token'];
+        return (isset($this->meta['next_token'])) ? $this->meta['next_token'] : null;
     }
 
     public function getResultCount(): int
