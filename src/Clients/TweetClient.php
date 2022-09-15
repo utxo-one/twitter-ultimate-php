@@ -61,6 +61,40 @@ class TweetClient extends BaseClient
         return new Users($response->getData());
     }
 
+    public function getTimeline(string $userId, ?int $maxResults = 100, ?string $paginationToken = null): Tweets
+    {
+        $response = $this->get('users/' . $userId . '/tweets', [
+            'tweet.fields' => $this->tweetFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
+        ]);
+
+        return new Tweets($response->getData());
+    }
+
+    public function getReverseTimeline(string $userId, ?int $maxResults = 100, ?string $paginationToken = null): Tweets
+    {
+        $response = $this->get('users/' . $userId . '/timelines/reverse_chronological', [
+            'tweet.fields' => $this->tweetFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
+            'tweet_mode' => 'extended',
+        ]);
+
+        return new Tweets($response->getData());
+    }
+
+    public function getMentionTimeline(string $userId, ?int $maxResults = 100, ?string $paginationToken = null): Tweets
+    {
+        $response = $this->get('users/' . $userId . '/mentions', [
+            'tweet.fields' => $this->tweetFields,
+            'max_results' => $maxResults,
+            'pagination_token' => $paginationToken,
+        ]);
+
+        return new Tweets($response->getData());
+    }
+
     public function tweet(string $text): Tweet
     {
         $response = $this->post('tweets', [

@@ -13,10 +13,10 @@ class UserClientTest extends BaseClientTest
     {
         $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
-        $response = $client->getUserByUsername('utxoone');
+        $response = $client->getUserByUsername('utxo_one');
 
         $this->assertInstanceOf(User::class, $response);
-        $this->assertSame('utxoONE', $response->getUsername());
+        $this->assertSame('utxo_one', $response->getUsername());
     }
 
     /** @group getUserById */
@@ -27,7 +27,7 @@ class UserClientTest extends BaseClientTest
         $response = $client->getUserById($_ENV['TWITTER_ADMIN_USER_ID']);
 
         $this->assertInstanceOf(User::class, $response);
-        $this->assertSame('utxoONE', $response->getUsername());
+        $this->assertSame('utxo_one', $response->getUsername());
         $this->assertFalse($response->isProtected());
         $this->assertFalse($response->isVerified());
         $this->assertSame('2022-08-14T21:32:08.000Z', $response->getCreatedAt());

@@ -33,6 +33,50 @@ class TweetClientTest extends BaseClientTest
         $this->assertTweetFieldsAreSet($response->all()[1]);
     }
 
+    /** @group getTimeline */
+    public function testGetTimeline(): void
+    {
+        $client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+        $response = $client->getTimeline('12', 10);
+
+        $this->assertInstanceOf(Tweets::class, $response);
+        $this->assertCount(10, $response->all());
+        $this->assertTweetFieldsAreSet($response->all()[0]);
+    }
+
+    /** @group getReverseTimeline */
+    public function testGetReverseTimeline(): void
+    {
+        $this->markTestIncomplete('Unsupported Authentication Type');
+        
+        $client = new TweetClient(
+            apiKey: $_ENV['TWITTER_API_KEY'], 
+            apiSecret: $_ENV['TWITTER_API_SECRET'], 
+            accessToken: $_ENV['TWITTER_ACCESS_TOKEN'], 
+            accessSecret: $_ENV['TWITTER_ACCESS_SECRET'],
+            bearerToken: $_ENV['TWITTER_BEARER_TOKEN'],
+        );
+
+        $response = $client->getReverseTimeline($_ENV['TWITTER_ADMIN_USER_ID'], 10);
+
+        $this->assertInstanceOf(Tweets::class, $response);
+        $this->assertCount(10, $response->all());
+        $this->assertTweetFieldsAreSet($response->all()[0]);
+    }
+
+    /** @group getMentionTimeline */
+    public function testGetMentionTimeline(): void
+    {
+        $client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
+
+        $response = $client->getMentionTimeline('12', 10);
+
+        $this->assertInstanceOf(Tweets::class, $response);
+        $this->assertCount(10, $response->all());
+        $this->assertTweetFieldsAreSet($response->all()[0]);
+    }
+
     /** @group getQuoteTweets */
     public function testGetQuoteTweets(): void
     {
