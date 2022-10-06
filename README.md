@@ -141,7 +141,7 @@ use UtxoOne\TwitterUltimatePhp\Clients\UserClient;
 $client = new UserClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
 $user = $client->getUserByUsername('utxoone');
-$likedTweets = $client->getLikedTweets($user->getId());
+$likedTweets = $client->getLikedTweets($user->getId())->all();
 
 foreach ($likedTweets as $likedTweet) {
   $likedTweet->getId();
