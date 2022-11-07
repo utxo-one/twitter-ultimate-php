@@ -24,7 +24,7 @@ class TweetClientTest extends BaseClientTest
     {
         $client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
-        $response = $client->getTweets(['1565628118001455105', '1565999511536914433']);
+        $response = $client->getTweets(['1589452392348930048', '1565999511536914433']);
 
         $this->assertInstanceOf(Tweets::class, $response);
         $this->assertSame('1565628118001455105', $response->all()[0]->getId());
