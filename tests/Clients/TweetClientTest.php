@@ -38,10 +38,13 @@ class TweetClientTest extends BaseClientTest
     {
         $client = new TweetClient(bearerToken: $_ENV['TWITTER_BEARER_TOKEN']);
 
-        $response = $client->getTimeline('12', 10);
+        $response = $client->getTimeline('1558929312547577858', 5);
 
         $this->assertInstanceOf(Tweets::class, $response);
-        $this->assertCount(10, $response->all());
+        $this->assertCount(5, $response->all());
+
+        die(var_dump($response->all()[0]));
+
         $this->assertTweetFieldsAreSet($response->all()[0]);
     }
 
