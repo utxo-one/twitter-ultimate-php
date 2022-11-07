@@ -153,6 +153,8 @@ class BaseClient
         $this->listFields = 'created_at,follower_count,member_count,private,description,owner_id';
         $this->userFields = 'created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld';
         $this->tweetFields = 'attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,reply_settings,source,text,withheld';
+        $this->expansions = 'attachments.media_keys';
+        $this->mediaFields = 'media_key,type,url,duration_ms,height,preview_image_url,public_metrics,width,alt_text,variants';
     }
 
     /**
