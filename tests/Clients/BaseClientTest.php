@@ -1,7 +1,6 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use UtxoOne\TwitterUltimatePhp\Client\Client;
 use UtxoOne\TwitterUltimatePhp\Models\Tweet;
 use UtxoOne\TwitterUltimatePhp\Models\Tweets;
 

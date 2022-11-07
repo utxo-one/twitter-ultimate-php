@@ -12,6 +12,8 @@ class TweetClient extends BaseClient
     {
         $response = $this->get('tweets/' . $id, [
             'tweet.fields' => $this->tweetFields,
+            'expansions' => $this->expansions,
+            'media.fields' => $this->mediaFields,
         ]);
 
         return new Tweet($response->getData());
