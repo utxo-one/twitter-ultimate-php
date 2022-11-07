@@ -44,7 +44,7 @@ class Tweet extends BaseModel
         return (isset($this->data['source']) ? $this->data['source'] : null);
     }
 
-    public function isWithheld(): ?bool
+    public function isWithheld(): ?array
     {
         return (isset($this->data['withheld']) ? $this->data['withheld'] : null);
     }
